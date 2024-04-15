@@ -32,27 +32,27 @@ public class BikeController {
         return new ResponseEntity<>(this.bikeService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping(params = {"user"})
+    @GetMapping("/{user}")
     @RolesAllowed({Roles.User, Roles.Admin})
-    public ResponseEntity<List<Bike>> getAllBikeByUser(@RequestParam(name = "user", required = true) String user) {
+    public ResponseEntity<List<Bike>> getAllBikeByUser(@PathVariable String user) {
         return new ResponseEntity<>(this.bikeService.findAllByUser(user), HttpStatus.OK);
     }
 
-    @GetMapping(params = {"id"})
+    @GetMapping("/{id}")
     @RolesAllowed({Roles.User, Roles.Admin})
-    public ResponseEntity<Bike> getBike(@RequestParam(name = "id", required = true) long id) {
+    public ResponseEntity<Bike> getBike(@PathVariable long id) {
         return new ResponseEntity<>(this.bikeService.findById(id), HttpStatus.OK);
     }
 
-    @PutMapping(params = {"id"})
+    @PutMapping("/{id}")
     @RolesAllowed({Roles.User, Roles.Admin})
-    public ResponseEntity<Bike> updateBike(@RequestParam(name = "id", required = true) long id, @RequestBody Bike bike) {
+    public ResponseEntity<Bike> updateBike(@PathVariable long id, @RequestBody Bike bike) {
         return new ResponseEntity<>(this.bikeService.update(bike), HttpStatus.OK);
     }
 
-    @DeleteMapping(params = {"id"})
+    @DeleteMapping("/{id}")
     @RolesAllowed({Roles.User, Roles.Admin})
-    public ResponseEntity<HttpStatus> deleteBike(@RequestParam(name = "id", required = true) long id) {
+    public ResponseEntity<HttpStatus> deleteBike(@PathVariable long id) {
         this.bikeService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

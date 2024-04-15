@@ -1,5 +1,6 @@
 package ch.trapp.niklas.motorify.bike;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,8 @@ public class BikeService {
     }
 
     public Bike findById(long id) {
-        return this.bikeRepo.findById(id).orElseThrow();
+        return this.bikeRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException());
     }
 
     public List<Bike> findAll() {
