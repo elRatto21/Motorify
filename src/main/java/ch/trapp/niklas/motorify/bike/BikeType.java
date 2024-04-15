@@ -1,4 +1,10 @@
 package ch.trapp.niklas.motorify.bike;
 
-public class BikeType {
+public enum BikeType {
+    NAKEDBIKE,
+    SUPERSPORTS,
+    SUPERMOTO,
+    ENDURO,
+    CHOPPER,
+    TOURING
 }
