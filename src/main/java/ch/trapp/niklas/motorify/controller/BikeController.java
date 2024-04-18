@@ -1,6 +1,8 @@
-package ch.trapp.niklas.motorify.bike;
+package ch.trapp.niklas.motorify.controller;
 
-import ch.trapp.niklas.motorify.manufacturer.Manufacturer;
+import ch.trapp.niklas.motorify.service.BikeService;
+import ch.trapp.niklas.motorify.dto.BikeDto;
+import ch.trapp.niklas.motorify.model.Bike;
 import ch.trapp.niklas.motorify.security.Roles;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
@@ -10,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController()
@@ -42,19 +43,19 @@ public class BikeController {
 
     @GetMapping("/{id}")
     @RolesAllowed({Roles.User, Roles.Admin})
-    public ResponseEntity<Bike> getBike(@PathVariable long id) {
+    public ResponseEntity<Bike> getBike(@PathVariable Long id) {
         return new ResponseEntity<>(this.bikeService.findById(id), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     @RolesAllowed({Roles.User, Roles.Admin})
-    public ResponseEntity<Bike> updateBike(@PathVariable long id, @RequestBody Bike bike) {
-        return new ResponseEntity<>(this.bikeService.update(bike), HttpStatus.OK);
+    public ResponseEntity<Bike> updateBike(@PathVariable Long id, @RequestBody BikeDto bikeDto) {
+        return new ResponseEntity<>(this.bikeService.update(bikeDto, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     @RolesAllowed({Roles.User, Roles.Admin})
-    public ResponseEntity<HttpStatus> deleteBike(@PathVariable long id) {
+    public ResponseEntity<HttpStatus> deleteBike(@PathVariable Long id) {
         this.bikeService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

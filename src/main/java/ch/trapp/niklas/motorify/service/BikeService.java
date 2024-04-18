@@ -1,7 +1,10 @@
-package ch.trapp.niklas.motorify.bike;
+package ch.trapp.niklas.motorify.service;
 
-import ch.trapp.niklas.motorify.manufacturer.Manufacturer;
-import ch.trapp.niklas.motorify.manufacturer.ManufacturerRepository;
+import ch.trapp.niklas.motorify.type.BikeType;
+import ch.trapp.niklas.motorify.dto.BikeDto;
+import ch.trapp.niklas.motorify.model.Bike;
+import ch.trapp.niklas.motorify.model.Manufacturer;
+import ch.trapp.niklas.motorify.repository.BikeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,13 +16,13 @@ import java.util.List;
 public class BikeService {
 
     @Autowired
-    private ManufacturerRepository manufacturerRepository;
+    private ManufacturerService manufacturerService;
 
     @Autowired
     private BikeRepository bikeRepo;
 
     public Bike save(BikeDto bikeDto) {
-        Manufacturer manufacturer = manufacturerRepository.findById(bikeDto.getManufacturer_id()).orElseThrow(() -> new EntityNotFoundException());
+        Manufacturer manufacturer = manufacturerService.findById(bikeDto.getManufacturer_id());
         Bike bike = new Bike(
                 manufacturer,
                 bikeDto.getModel(),
@@ -31,7 +34,6 @@ public class BikeService {
                 LocalDateTime.now(),
                 "test"
         );
-
 
         return this.bikeRepo.save(bike);
     }
@@ -48,11 +50,24 @@ public class BikeService {
         return this.bikeRepo.findAllByUsername(username);
     }
 
-    public Bike update(Bike bike) {
-        return null;
+    public Bike update(BikeDto bike, Long id) {
+        return bikeRepo.findById(id)
+                .map(bikeOrig -> {
+                    bikeOrig.setBikeType(bike.getBikeType());
+                    bikeOrig.setMileage(bike.getMileage());
+                    bikeOrig.setHorsepower(bike.getHorsepower());
+                    bikeOrig.setManufacturer(manufacturerService.findById(bike.getManufacturer_id()));
+                    bikeOrig.setWeight(bike.getWeight());
+                    bikeOrig.setModel(bike.getModel());
+                    bikeOrig.setYear(bike.getYear());
+                    bikeOrig.setCreatedAt(LocalDateTime.now());
+                    return bikeRepo.save(bikeOrig);
+                })
+                .orElseGet(() -> save(bike));
     }
 
     public void deleteById(long bikeId) {
         this.bikeRepo.deleteById(bikeId);
     }
+
 }
