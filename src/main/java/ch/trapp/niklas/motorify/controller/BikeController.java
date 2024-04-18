@@ -1,5 +1,6 @@
 package ch.trapp.niklas.motorify.bike;
 
+import ch.trapp.niklas.motorify.manufacturer.Manufacturer;
 import ch.trapp.niklas.motorify.security.Roles;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController()
@@ -22,8 +24,8 @@ public class BikeController {
 
     @PostMapping()
     @RolesAllowed({Roles.User, Roles.Admin})
-    public ResponseEntity<Bike> postBike(@RequestBody Bike bike) {
-        return new ResponseEntity<>(this.bikeService.save(bike), HttpStatus.CREATED);
+    public ResponseEntity<Bike> postBike(@RequestBody BikeDto bikeDto) {
+        return new ResponseEntity<>(this.bikeService.save(bikeDto), HttpStatus.CREATED);
     }
 
     @GetMapping()
@@ -32,10 +34,10 @@ public class BikeController {
         return new ResponseEntity<>(this.bikeService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{user}")
+    @GetMapping(params = {"user"})
     @RolesAllowed({Roles.User, Roles.Admin})
-    public ResponseEntity<List<Bike>> getAllBikeByUser(@PathVariable String user) {
-        return new ResponseEntity<>(this.bikeService.findAllByUser(user), HttpStatus.OK);
+    public ResponseEntity<List<Bike>> getAllBikeByUser(@RequestParam String user) {
+        return new ResponseEntity<>(this.bikeService.findAllByUsername(user), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

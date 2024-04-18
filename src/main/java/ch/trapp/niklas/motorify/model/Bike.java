@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDateTime;
+
 @Data
 @Entity
 @Validated
@@ -26,6 +28,9 @@ public class Bike {
     private String model;
 
     @NotNull
+    private BikeType bikeType;
+
+    @NotNull
     private int year;
 
     @NotNull
@@ -38,18 +43,23 @@ public class Bike {
     private int mileage;
 
     @NotEmpty
-    private String user;
+    private String username;
+
+    @NotNull
+    private LocalDateTime createdAt;
 
     public Bike() {}
 
-    public Bike(Manufacturer manufacturer, String model, int year, int horsepower, int weight, int mileage, String user) {
+    public Bike(Manufacturer manufacturer, String model, int year, int horsepower, int weight, int mileage, BikeType bikeType, LocalDateTime createdAt, String username) {
         this.manufacturer = manufacturer;
         this.model = model;
         this.year = year;
         this.horsepower = horsepower;
         this.weight = weight;
         this.mileage = mileage;
-        this.user = user;
+        this.username = username;
+        this.bikeType = bikeType;
+        this.createdAt = createdAt;
     }
 
 }
