@@ -1,5 +1,7 @@
-package ch.trapp.niklas.motorify.manufacturer;
+package ch.trapp.niklas.motorify.controller;
 
+import ch.trapp.niklas.motorify.service.ManufacturerService;
+import ch.trapp.niklas.motorify.model.Manufacturer;
 import ch.trapp.niklas.motorify.security.Roles;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
@@ -34,19 +36,25 @@ public class ManufacturerController {
 
     @GetMapping("/{id}")
     @RolesAllowed({Roles.Admin, Roles.User})
-    public ResponseEntity<Manufacturer> getManufacturerByName(@PathVariable long id) {
+    public ResponseEntity<Manufacturer> getManufacturerById(@PathVariable Long id) {
         return new ResponseEntity<>(this.manufacturerService.findById(id), HttpStatus.OK);
+    }
+
+    @GetMapping(params = {"name"})
+    @RolesAllowed({Roles.Admin, Roles.User})
+    public ResponseEntity<List<Manufacturer>> getAllManufacturerByName(@RequestParam String name) {
+        return new ResponseEntity<>(this.manufacturerService.findAllByName(name), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     @RolesAllowed(Roles.Admin)
-    public ResponseEntity<Manufacturer> updateManufacturer(@PathVariable long id, @RequestBody Manufacturer manufacturer) {
+    public ResponseEntity<Manufacturer> updateManufacturer(@PathVariable Long id, @RequestBody Manufacturer manufacturer) {
         return new ResponseEntity<>(this.manufacturerService.update(manufacturer, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     @RolesAllowed(Roles.Admin)
-    public ResponseEntity<HttpStatus> deleteManufacturer(@PathVariable long id) {
+    public ResponseEntity<HttpStatus> deleteManufacturer(@PathVariable Long id) {
         this.manufacturerService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

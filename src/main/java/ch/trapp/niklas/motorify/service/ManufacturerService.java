@@ -1,5 +1,8 @@
-package ch.trapp.niklas.motorify.manufacturer;
+package ch.trapp.niklas.motorify.service;
 
+import ch.trapp.niklas.motorify.model.Manufacturer;
+import ch.trapp.niklas.motorify.repository.BikeRepository;
+import ch.trapp.niklas.motorify.repository.ManufacturerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,29 +13,38 @@ import java.util.List;
 public class ManufacturerService {
 
     @Autowired
-    private ManufacturerRepository manufacturerRepository;
+    private ManufacturerRepository manufacturerRepo;
+
+    @Autowired
+    private BikeRepository bikeRepository;
 
     public List<Manufacturer> findAll() {
-        return this.manufacturerRepository.findAll();
+        return this.manufacturerRepo.findAll();
     }
 
-    public Manufacturer findById(long id) {
-        return this.manufacturerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+    public Manufacturer findById(Long id) {
+        return this.manufacturerRepo.findById(id).orElseThrow(() -> new EntityNotFoundException());
+    }
+
+    public List<Manufacturer> findAllByName(String name) {
+        return this.manufacturerRepo.findByNameContainingIgnoreCase(name);
     }
 
     public Manufacturer save(Manufacturer manufacturer) {
-        return this.manufacturerRepository.save(manufacturer);
+        return this.manufacturerRepo.save(manufacturer);
     }
 
-    public Manufacturer update(Manufacturer manufacturer, long id) {
-        return manufacturerRepository.findById(id).map(manufacturerOrig -> {
+    public Manufacturer update(Manufacturer manufacturer, Long id) {
+        return manufacturerRepo.findById(id).map(manufacturerOrig -> {
             manufacturerOrig.setName(manufacturer.getName());
-            return manufacturerRepository.save(manufacturerOrig);
-        }).orElseGet(() -> manufacturerRepository.save(manufacturer));
+            manufacturerOrig.setCountry(manufacturer.getCountry());
+            return manufacturerRepo.save(manufacturerOrig);
+        }).orElseGet(() -> manufacturerRepo.save(manufacturer));
     }
 
-    public void deleteById(long id) {
-        this.manufacturerRepository.deleteById(id);
+    public void deleteById(Long id) {
+        this.bikeRepository.deleteAllByManufacturer_Id(id);
+        this.manufacturerRepo.deleteById(id);
     }
 
 }
