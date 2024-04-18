@@ -1,4 +1,4 @@
-package ch.trapp.niklas.motorify.manufacturer;
+package ch.trapp.niklas.motorify.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,11 +18,15 @@ public class Manufacturer {
     @NotEmpty
     private String name;
 
+    @NotEmpty
+    private String country;
+
     public Manufacturer() {
     }
 
-    public Manufacturer(String name) {
+    public Manufacturer(String name, String country) {
         this.name = name;
+        this.country = country;
     }
 
 }

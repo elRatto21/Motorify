@@ -1,6 +1,6 @@
-package ch.trapp.niklas.motorify.bike;
+package ch.trapp.niklas.motorify.model;
 
-import ch.trapp.niklas.motorify.manufacturer.Manufacturer;
+import ch.trapp.niklas.motorify.type.BikeType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +9,7 @@ import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
