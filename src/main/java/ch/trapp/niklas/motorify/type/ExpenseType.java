@@ -1,4 +1,4 @@
-package ch.trapp.niklas.motorify.enums;
+package ch.trapp.niklas.motorify.type;
 
 public enum ExpenseType {
     PART,
