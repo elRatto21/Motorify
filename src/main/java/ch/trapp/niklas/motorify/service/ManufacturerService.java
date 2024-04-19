@@ -15,8 +15,11 @@ public class ManufacturerService {
     @Autowired
     private ManufacturerRepository manufacturerRepo;
 
-    @Autowired
-    private BikeRepository bikeRepository;
+    public ManufacturerService(ManufacturerRepository manufacturerRepository) {
+        this.manufacturerRepo = manufacturerRepository;
+    }
+
+    public ManufacturerService() {}
 
     public List<Manufacturer> findAll() {
         return this.manufacturerRepo.findAll();
@@ -43,7 +46,6 @@ public class ManufacturerService {
     }
 
     public void deleteById(Long id) {
-        this.bikeRepository.deleteAllByManufacturer_Id(id);
         this.manufacturerRepo.deleteById(id);
     }
 
