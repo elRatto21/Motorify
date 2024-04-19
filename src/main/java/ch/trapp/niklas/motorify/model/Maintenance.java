@@ -22,7 +22,7 @@ public class Maintenance {
 
     private LocalDate date;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "expenses")
     private List<Expense> expenses;
 
