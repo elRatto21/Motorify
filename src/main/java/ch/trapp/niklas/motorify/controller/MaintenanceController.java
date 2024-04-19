@@ -54,7 +54,7 @@ public class MaintenanceController {
     }
 
     @DeleteMapping("/{id}")
-    @RolesAllowed({Roles.Admin, Roles.User})
+    @RolesAllowed({Roles.Admin})
     public ResponseEntity<HttpStatus> deleteMaintenance(@PathVariable Long id) {
         this.maintenanceService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);

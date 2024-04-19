@@ -23,7 +23,7 @@ public class ExpenseController {
     private ExpenseService expenseService;
 
     @GetMapping()
-    @RolesAllowed({Roles.Admin, Roles.User})
+    @RolesAllowed({Roles.Admin})
     public ResponseEntity<List<Expense>> getAllExpense() {
         return new ResponseEntity<>(this.expenseService.findAll(), HttpStatus.OK);
     }
@@ -54,7 +54,7 @@ public class ExpenseController {
     }
 
     @DeleteMapping("/{id}")
-    @RolesAllowed({Roles.Admin, Roles.User})
+    @RolesAllowed({Roles.Admin})
     public ResponseEntity<HttpStatus> deleteExpense(@PathVariable Long id) {
         this.expenseService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);

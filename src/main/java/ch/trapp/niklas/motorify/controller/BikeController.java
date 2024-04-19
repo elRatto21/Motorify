@@ -54,7 +54,7 @@ public class BikeController {
     }
 
     @DeleteMapping("/{id}")
-    @RolesAllowed({Roles.User, Roles.Admin})
+    @RolesAllowed({Roles.Admin})
     public ResponseEntity<HttpStatus> deleteBike(@PathVariable Long id) {
         this.bikeService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
