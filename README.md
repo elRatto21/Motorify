@@ -2,6 +2,8 @@
 
 This is the backend of my "Motorify" school project
 
+---
+
 ### Used Technologies
 
 - Spring Boot 3
@@ -9,6 +11,7 @@ This is the backend of my "Motorify" school project
 - KeyCloak
 - Swagger UI
 
+---
 
 ### How to use
 
