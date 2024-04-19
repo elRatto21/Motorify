@@ -32,7 +32,7 @@ public class BikeService {
                 bikeDto.getMileage(),
                 BikeType.SUPERMOTO,
                 LocalDateTime.now(),
-                "test"
+                bikeDto.getUsername()
         );
 
         return this.bikeRepo.save(bike);

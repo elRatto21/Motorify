@@ -22,6 +22,8 @@ public class BikeDto {
 
     private int mileage;
 
+    private String username;
+
     public BikeDto() {}
 
 }
