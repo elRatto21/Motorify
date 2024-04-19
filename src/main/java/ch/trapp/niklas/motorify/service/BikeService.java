@@ -61,6 +61,7 @@ public class BikeService {
                     bikeOrig.setModel(bike.getModel());
                     bikeOrig.setYear(bike.getYear());
                     bikeOrig.setCreatedAt(LocalDateTime.now());
+                    bikeOrig.setUsername(bike.getUsername());
                     return bikeRepo.save(bikeOrig);
                 })
                 .orElseGet(() -> save(bike));
